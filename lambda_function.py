@@ -4,7 +4,7 @@ from ast import literal_eval
 
 
 print('Loading function')
-#defining the function
+
 def lambda_handler(event, context):
 	#1. Parse out query string params
 	print(event)
@@ -53,32 +53,29 @@ def lambda_handler(event, context):
 			#Donothing
 			email=""
 		else:
-			target = webhook_req['profiles'][0]['email']
-			email = target
+			email = webhook_req['profiles'][0]['email']
 		try:
-			target = webhook_req['profiles'][0]['identity']
+			webhook_req['profiles'][0]['identity']
 		except NameError:
 			#Donothing
 			identity=""
 		else:
-			target = webhook_req['profiles'][0]['identity']
-			identity = target
+			identity = webhook_req['profiles'][0]['identity']
 		try:
 			webhook_req['profiles'][0]['objectId']
 		except NameError:
 			#donothing
 			ob_id=""
 		else:
-			target = webhook_req['profiles'][0]['objectId']
-			ob_id= target
-	
+			ob_id = webhook_req['profiles'][0]['objectId']
+
 	
 	#Raise events
 	if iseventupload==True:
 		
 		evt_props = webhook_req['profiles'][0]['event_properties']
 		url_evt = "https://api.clevertap.com/1/upload"
-		payload_evt = '{ \'d\': [ { \'identity\':''\''+str(target)+'\', \'type\': \'event\', \'evtName\': \'From Webhook\', \'evtData\':'+str(evt_props)+'} ] }'
+		payload_evt = '{ \'d\': [ { \'objectId\':''\''+str(ob_id)+'\', \'type\': \'event\', \'evtName\': \'From Webhook\', \'evtData\':'+str(evt_props)+'} ] }'
 		response_evt = requests.request("POST", url=url_evt, data=payload_evt, headers=headers)
 		print(response_evt.text)
 		print(response_evt.request.body)

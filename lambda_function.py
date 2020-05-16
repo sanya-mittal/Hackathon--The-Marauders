@@ -4,7 +4,7 @@ from ast import literal_eval
 
 
 print('Loading function')
-
+#defining the function
 def lambda_handler(event, context):
 	#1. Parse out query string params
 	print(event)

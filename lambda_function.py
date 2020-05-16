@@ -1,7 +1,5 @@
 import json
 from botocore.vendored import requests
-from ast import literal_eval
-
 
 print('Loading function')
 

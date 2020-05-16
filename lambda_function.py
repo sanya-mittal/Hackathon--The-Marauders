@@ -72,25 +72,25 @@ def lambda_handler(event, context):
 			ob_id = webhook_req['profiles'][i]['objectId']
 
 	
-	#Raise events
-	if iseventupload==True:
+		#Raise events
+		if iseventupload==True:
 		
-		evt_props = webhook_req['profiles'][i]['event_properties']
-		url_evt = "https://api.clevertap.com/1/upload"
-		payload_evt = '{ \'d\': [ { \'objectId\':''\''+str(ob_id)+'\', \'type\': \'event\', \'evtName\': \'From Webhook\', \'evtData\':'+str(evt_props)+'} ] }'
-		response_evt = requests.request("POST", url=url_evt, data=payload_evt, headers=headers)
-		print(response_evt.text)
-		print(response_evt.request.body)
+			evt_props = webhook_req['profiles'][i]['event_properties']
+			url_evt = "https://api.clevertap.com/1/upload"
+			payload_evt = '{ \'d\': [ { \'objectId\':''\''+str(ob_id)+'\', \'type\': \'event\', \'evtName\': \'From Webhook\', \'evtData\':'+str(evt_props)+'} ] }'
+			response_evt = requests.request("POST", url=url_evt, data=payload_evt, headers=headers)
+			print(response_evt.text)
+			print(response_evt.request.body)
 
-	#upload profile
-	if isprofileupload==True:
-		profile_data = webhook_req['profiles'][i]['profileData']
-		url_profile = "https://api.clevertap.com/1/upload"
-		payload_profile = '{\'d\':[{\'objectId\':''\''+str(ob_id)+'\',\'type\':\'profile\',\'profileData\':'+str(profile_data)+'}]}'
-		response_profile = requests.request("POST", url=url_profile, data=payload_profile, headers=headers)
+		#upload profile
+		if isprofileupload==True:
+			profile_data = webhook_req['profiles'][i]['profileData']
+			url_profile = "https://api.clevertap.com/1/upload"
+			payload_profile = '{\'d\':[{\'objectId\':''\''+str(ob_id)+'\',\'type\':\'profile\',\'profileData\':'+str(profile_data)+'}]}'
+			response_profile = requests.request("POST", url=url_profile, data=payload_profile, headers=headers)
 	
-		print(response_profile.text)
-		print(response_profile.request.body)
+			print(response_profile.text)
+			print(response_profile.request.body)
 	
 	#4. Return the response object
 	return responseObject

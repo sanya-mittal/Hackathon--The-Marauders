@@ -34,7 +34,7 @@ def lambda_handler(event, context):
 	else:
 		isprofileupload = False
 		
-	
+	#Form the API request
 	Acc_ID = webhook_req['key_values'].get('target_account')
 	Pass_code = webhook_req['key_values'].get('target_passcode')
 	headers = {
@@ -43,8 +43,11 @@ def lambda_handler(event, context):
     'Content-Type': 'application/json'
 	}
 	
+	#Check number of objects in the request
 	len_of_object = len(webhook_req['profiles'])
-	
+
+
+	#Get the various identities... will use objId for this POC
 	for i in range(0,len_of_object):
 		try:
 			webhook_req['profiles'][i]['email']

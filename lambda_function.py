@@ -1,6 +1,7 @@
 import json
 from botocore.vendored import requests
 
+
 print('Loading function')
 
 def lambda_handler(event, context):
@@ -46,32 +47,32 @@ def lambda_handler(event, context):
 	
 	for i in range(0,len_of_object):
 		try:
-			webhook_req['profiles'][0]['email']
+			webhook_req['profiles'][i]['email']
 		except NameError:
 			#Donothing
 			email=""
 		else:
-			email = webhook_req['profiles'][0]['email']
+			email = webhook_req['profiles'][i]['email']
 		try:
-			webhook_req['profiles'][0]['identity']
+			webhook_req['profiles'][i]['identity']
 		except NameError:
 			#Donothing
 			identity=""
 		else:
-			identity = webhook_req['profiles'][0]['identity']
+			identity = webhook_req['profiles'][i]['identity']
 		try:
-			webhook_req['profiles'][0]['objectId']
+			webhook_req['profiles'][i]['objectId']
 		except NameError:
 			#donothing
 			ob_id=""
 		else:
-			ob_id = webhook_req['profiles'][0]['objectId']
+			ob_id = webhook_req['profiles'][i]['objectId']
 
 	
 	#Raise events
 	if iseventupload==True:
 		
-		evt_props = webhook_req['profiles'][0]['event_properties']
+		evt_props = webhook_req['profiles'][i]['event_properties']
 		url_evt = "https://api.clevertap.com/1/upload"
 		payload_evt = '{ \'d\': [ { \'objectId\':''\''+str(ob_id)+'\', \'type\': \'event\', \'evtName\': \'From Webhook\', \'evtData\':'+str(evt_props)+'} ] }'
 		response_evt = requests.request("POST", url=url_evt, data=payload_evt, headers=headers)
@@ -80,7 +81,7 @@ def lambda_handler(event, context):
 
 	#upload profile
 	if isprofileupload==True:
-		profile_data = webhook_req['profiles'][0]['profileData']
+		profile_data = webhook_req['profiles'][i]['profileData']
 		url_profile = "https://api.clevertap.com/1/upload"
 		payload_profile = '{\'d\':[{\'objectId\':''\''+str(ob_id)+'\',\'type\':\'profile\',\'profileData\':'+str(profile_data)+'}]}'
 		response_profile = requests.request("POST", url=url_profile, data=payload_profile, headers=headers)

@@ -41,3 +41,28 @@ __ Currently the script has hardcoded the details which needs to be loaded back 
 __ We return the responses for success ingestion via API. Addition to it,  We would be Handling all the errors, be it around payload, or any outage which may in turn if fails the upload via API's, this would explicitly let the end user know in case of any breakout and the reason behind it. 
 
 __ Making the process more scalable to raise 3 concurrent threads as what we currently accept in API calls .
+
+<br />
+
+**Sample expected Payload**
+
+Payload received at your endpoint
+
+```
+{ "targetId" : 1589621729 , "key_values" : { "target_account" : "W44-Z4K-K65Z" , "target_passcode" : "IAA-ZAB-GEKL" , "profile_upload" : "yes" , "event_upload" : "yes"} , "profiles" : [ { "key_values" : { "target_account" : "W44-Z4K-K65Z" , "target_passcode" : "IAA-ZAB-GEKL" , "profile_upload" : "yes" , "event_upload" : "yes"} , "email" : "yash+567@clevertap.com" , "identity" : "1234" , "all_identities" : [ "1234" , "yash+123456@clevertap.com" , "yash+567@clevertap.com"] , "objectId" : "__189f188bf9394c0da3d219ea4959a785" , "profileData" : { "city" : "Mumbai" , "evtname" : "CSV upload event test" , "apitest" : 23 , "datetest" : "$D_1589290950" , "itp" : "1" , "test" : "1233"} , "name" : "Yash TEST" , "push_token" : "fcm:eBtus6A0RpKfL-HPuUzrlp:APA91bFiq_suxBi3eS5nMR7i3JfmvyLP4QURtXHZqZXyrc_iYq_VDfkipJcB5srObRbniQWVgmT6nvyyd8oqfDmi96Iwefnn-eN1Dp6wUmtItQEjLnPVV97SUMNDrlIFOTC4SPrJV7HC" , "event_properties" : { "Event Prop Name" : "Property value" , "CT App Version" : "2.2" , "CT Source" : "Mobile"}}]}
+```
+
+**Payload goes back to CleverTap**
+
+<br />
+*Profile Data*
+<br />
+```{'d':[{'objectId':'__189f188bf9394c0da3d219ea4959a785','type':'profile','profileData':{'city': 'Mumbai', 'evtname': 'CSV upload event test', 'apitest': 23, 'datetest': '$D_1589290950', 'itp': '1', 'test': '1233'}}]}
+```
+
+
+*Events*
+<br />
+```
+{ 'd': [ { 'objectId':'__189f188bf9394c0da3d219ea4959a785', 'type': 'event', 'evtName': 'From Webhook', 'evtData':{'Event Prop Name': 'Property value', 'CT App Version': '2.2', 'CT Source': 'Mobile'}} ] }
+```

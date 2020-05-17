@@ -4,9 +4,7 @@
 **Problem statement:** ETL happens to be an everyday process actually breaked out in three individual steps at Clients end. 
 
 
-**Solution**
-
-  How about an ability to do it in a single go?  
+**Solution:**  How about an ability to do it in a single go?  
  Here is our implementation to achieve this in single go using  Webhook functionality on CleverTap dashboard. Webhook endpoint  is configured such a way, that as soon as the request triggers, endpoint in turn adds all the changes and hit back the data to CleverTap API's , completing a loop of Export transform and load in a single functionality. 
 
 
@@ -32,6 +30,7 @@ A Webhook Campaign has been streamed using custom KV's containing some predefine
 
 
  **Upcoming Enhancements :**
+ <br />
 
 Given this our first try on the implementation, looking forward to following enhancements in near future.
 

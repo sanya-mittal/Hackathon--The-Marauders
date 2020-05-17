@@ -9,22 +9,21 @@ def lambda_handler(event, context):
 	print(event)
 
 	#2. Construct the body of the response object
-	transactionResponse = {}
-
 	responseObject = {}
 	responseObject['statusCode'] = 200
 	responseObject['headers'] = {}
 	responseObject['headers']['Content-Type'] = 'application/json'
+	#add ingested api body to the response for debugging
 	webhook_req =  event['body']
 	responseObject['body'] = webhook_req
+
+	#Make sure that the body is in dictinory for fetching elements in the further steps
 	webhook_req = json.loads(webhook_req)
+	#log the type of the body - should be dict 
 	print(type(webhook_req))
 	
 	
-	
-	
-	
-	#check if event or profile
+	#check if event or profile process needs to be followed
 	if (webhook_req['key_values'].get('event_upload')=="Yes" or webhook_req['key_values'].get('event_upload')=="yes"):
 		iseventupload =True
 	else:
@@ -38,17 +37,18 @@ def lambda_handler(event, context):
 	Acc_ID = webhook_req['key_values'].get('target_account')
 	Pass_code = webhook_req['key_values'].get('target_passcode')
 	headers = {
-    'X-CleverTap-Account-Id': ""+str(Acc_ID)+"",
-    'X-CleverTap-Passcode': ""+str(Pass_code)+"",
-    'Content-Type': 'application/json'
+    	'X-CleverTap-Account-Id': ""+str(Acc_ID)+"",
+   	'X-CleverTap-Passcode': ""+str(Pass_code)+"",
+   	'Content-Type': 'application/json'
 	}
 	
 	#Check number of objects in the request
 	len_of_object = len(webhook_req['profiles'])
 
 
-	#Get the various identities... will use objId for this POC
+	#Get the various identities... will use objId for this example
 	for i in range(0,len_of_object):
+		'''
 		try:
 			webhook_req['profiles'][i]['email']
 		except NameError:
@@ -63,11 +63,15 @@ def lambda_handler(event, context):
 			identity=""
 		else:
 			identity = webhook_req['profiles'][i]['identity']
+		'''
 		try:
 			webhook_req['profiles'][i]['objectId']
 		except NameError:
-			#donothing
+			#Donothing
 			ob_id=""
+			responseObject['statusCode'] = 400
+			responseObject['body']['error']= 'Bad Request'
+			return responseObject
 		else:
 			ob_id = webhook_req['profiles'][i]['objectId']
 
@@ -82,7 +86,7 @@ def lambda_handler(event, context):
 			print(response_evt.text)
 			print(response_evt.request.body)
 
-		#upload profile
+		#Upload profile
 		if isprofileupload==True:
 			profile_data = webhook_req['profiles'][i]['profileData']
 			url_profile = "https://api.clevertap.com/1/upload"

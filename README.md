@@ -10,6 +10,7 @@
 
 
 <br />
+
  **What needs to be done on CleverTap dashboard:** 
 
 A Webhook Campaign has been streamed using custom KV's containing some predefined parameters in the script.We Would be fetching the account details  in webhook under which we be loading the data, be it same or different account. Setup is done such a way that we can either raise an event or profile properties or both. 
